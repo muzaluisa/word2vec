@@ -41,7 +41,8 @@ with tf.name_scope("loss"):
      stddev = 1.0 / math.sqrt(EMBED_SIZE)), name='nce_weight')
      # Initialize nce_bias
      nce_bias = tf.Variable(tf.zeros([VOCAB_SIZE]), name='nce_bias')
-     # Define loss function to be NCE loss function with nce_weight and 
+     # Define loss function to be NCE loss function with nce_weight and bias
+     # Compare with tf.nn.sampled_softmax_loss!   
      loss = tf.reduce_mean(tf.nn.nce_loss(weights=nce_weight,\
      biases = nce_bias, labels = target_words, inputs = embed, num_sampled = NUM_SAMPLED, num_classes=VOCAB_SIZE), name='loss')
      # Define GradientDescentOptimizer
@@ -126,8 +127,10 @@ with tf.Session() as sess:
              print('Average loss at step {}: {:5.1f}'.format(index + 1,\
             average_loss / ((index + 1)*n_samples/BATCH_SIZE-1)))
 
-# Perform tsne visualization for the most frequent words in the vocabulary using embedding matrix      
+# Perform tsne visualization for the most frequent words in the vocabulary using embedding matrix
 '''
+Save resulting embedding matrix
+Pick some indices of words from from word_index and prepare the matrix X with data
 X = embed[indices]
 from sklearn.manifold import TSNE
 tsne = TSNE(n_components=2)
