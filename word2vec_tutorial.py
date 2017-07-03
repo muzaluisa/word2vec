@@ -47,6 +47,9 @@ with tf.name_scope("loss"):
      biases = nce_bias, labels = target_words, inputs = embed, num_sampled = NUM_SAMPLED, num_classes=VOCAB_SIZE), name='loss')
      # Define GradientDescentOptimizer
      optimizer = tf.train.GradientDescentOptimizer(LEARNING_RATE).minimize(loss)
+        
+     norm = tf.sqrt(tf.reduce_sum(tf.square(embed), 1, keep_dims=True))
+     normalized_embeddings = embed / norm   
   
 def clean_str(string, TREC=False):
     """
