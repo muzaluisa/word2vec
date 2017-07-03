@@ -44,6 +44,8 @@ with tf.name_scope("loss"):
      loss = CODE_HERE
      # Define GradientDescentOptimizer
      optimizer = tf.train.GradientDescentOptimizer(LEARNING_RATE).minimize(loss)
+        
+     # Normalize embed matrix, so that you can use it later using dictionary look-up  
   
 def clean_str(string, TREC=False):
     """
